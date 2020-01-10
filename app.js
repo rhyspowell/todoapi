@@ -68,6 +68,41 @@ app.post('/api/v1/todos', (req, res) => {
    })
   });
 
+// edit todo
+app.put('/api/v1/todos/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  let itemIndex;
+  if(!req.body.title) {
+    return res.status(400).send({
+      success: 'false',
+      message: 'title is required'
+    });
+  } else if(!req.body.description) {
+    return res.status(400).send({
+      success: 'false',
+      message: 'description is required'
+    });
+  }
+  const todo = {
+    id: id,
+    title: req.body.title,
+    description: req.body.description
+  }
+  db.map((todo, index) => {
+    if (todo.id === id) {
+      console.log(todo.id)
+      console.log(index)
+      itemIndex = index;
+    }
+  });
+  db.splice(itemIndex, 1, todo);
+  return res.status(201).send({
+    success: 'true',
+    message: 'todo update successfully',
+    todo
+  })
+ });
+
 // Delete todo
 app.delete('/api/v1/todos/:id', (req, res) => {
   const id = parseInt(req.params.id, 10);

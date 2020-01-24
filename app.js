@@ -3,9 +3,8 @@ import db from './db/db';
 import bodyParser from 'body-parser';
 // Set up the express app
 const app = express();
-const PORT = 5000;
 
-module.exports = app.listen();
+module.exports = app;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
@@ -20,9 +19,7 @@ app.get('/api/v1/todos', (req, res) => {
   })
 });
 
-app.listen(PORT, () => {
-  console.log(`server running on port ${PORT}`)
-});
+
 
 // get single todo
 app.get('/api/v1/todos/:id', (req, res) => {
@@ -90,13 +87,11 @@ app.put('/api/v1/todos/:id', (req, res) => {
   }
   db.map((todo, index) => {
     if (todo.id === id) {
-      console.log(todo.id)
-      console.log(index)
       itemIndex = index;
     }
   });
   db.splice(itemIndex, 1, todo);
-  return res.status(201).send({
+  return res.status(200).send({
     success: 'true',
     message: 'todo update successfully',
     todo

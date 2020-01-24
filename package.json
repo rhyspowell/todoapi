@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watchAll",
-    "start": "nodemon app.js --exec babel-node --"
+    "test1": "jest --watchAll",
+    "test": "jest",
+    "start": "nodemon server.js --exec babel-node --"
   },
   "repository": {
     "type": "git",
